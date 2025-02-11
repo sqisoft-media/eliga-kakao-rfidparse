@@ -24,8 +24,7 @@
 
     <script>
         const parseEmToMifareRfid = rfidCode => {
-            let tempRfidCode = rfidCode;
-            alert(1111111111);
+            let tempRfidCode = rfidCode.toString().trim();
 
             if (String(tempRfidCode).length < 9 && Number(tempRfidCode) < 0xffffff) {
                 tempRfidCode = Number(tempRfidCode).toString(16);
