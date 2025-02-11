@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RFID 변환기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h3>RFID 변환기</h3>
+    <input type="text" id="rfidInput" placeholder="RFID 코드 입력">
+    <button onclick="convertRfid()">변환</button>
+    <p>결과: <span id="result"></span></p>
+
+    <script>
+        const parseEmToMifareRfid = rfidCode => {
+            let tempRfidCode = rfidCode;
+
+            if (String(tempRfidCode).length < 9 && Number(tempRfidCode) < 0xffffff) {
+                tempRfidCode = Number(tempRfidCode).toString(16);
+                let temp1 = tempRfidCode.slice(0, tempRfidCode.length - 4);
+                let temp2 = tempRfidCode.slice(tempRfidCode.length - 4);
+                temp1 = parseInt(temp1, 16);
+                temp2 = parseInt(temp2, 16);
+                tempRfidCode = String(temp1).padStart(3, '0') + String(temp2).padStart(5, '0');
+            }
+
+            return tempRfidCode;
+        };
+
+        function convertRfid() {
+            const input = document.getElementById('rfidInput').value;
+            const result = parseEmToMifareRfid(input);
+            document.getElementById('result').textContent = result;
+        }
+    </script>
+</body>
+</html>
